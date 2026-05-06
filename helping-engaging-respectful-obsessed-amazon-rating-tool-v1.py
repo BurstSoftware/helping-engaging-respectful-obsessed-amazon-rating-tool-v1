@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 from datetime import date
-import json
 
 # ========================= CONFIG =========================
 st.set_page_config(
@@ -66,11 +65,30 @@ with tab1:
     with col_meta:
         st.subheader("Assessment Details")
         associate = st.text_input("Associate Name / ID", placeholder="Maria Lopez • A874392")
+        
+        # Updated Area / Process List with QMN7 & WMN7
         area = st.selectbox(
-            "Area / Process",
-            ["Pick - North Wing", "Pack - Downstream", "Receive / Stow", "Sort Center - IB",
-             "Problem Solve", "Ship Dock", "Returns", "Other"]
+            "Building & Area / Process",
+            [
+                "QMN7 - Pick",
+                "QMN7 - Pack",
+                "QMN7 - Stow",
+                "QMN7 - Receive",
+                "QMN7 - Ship Dock",
+                "QMN7 - Problem Solve",
+                "QMN7 - Sortation",
+                "QMN7 - Other",
+                "WMN7 - Inbound",
+                "WMN7 - Outbound",
+                "WMN7 - Pick",
+                "WMN7 - Pack",
+                "WMN7 - Stow",
+                "WMN7 - Returns",
+                "WMN7 - Other",
+                "Other Building / Process"
+            ]
         )
+        
         shift = st.selectbox("Shift", ["Morning", "Mid", "Nights"])
         assessment_date = st.date_input("Assessment Date", value=date.today())
         
@@ -180,7 +198,7 @@ with tab1:
                     )
                     st.plotly_chart(fig, use_container_width=True)
                     
-                    # Download buttons
+                    # Download button
                     csv = pd.DataFrame({
                         "Dimension": list(assessment["scores"].keys()),
                         "Score": list(assessment["scores"].values()),
@@ -230,7 +248,7 @@ with tab3:
     st.markdown("""
     ### How the Qualitative Ordinal Tool Works
 
-    1. **Select Associate** — Enter name/ID, area, shift
+    1. **Select Associate** — Enter name/ID, building & area, shift
     2. **Rate on 4 Pillars** — Use the 1–5 ordinal scale with real operational examples
     3. **Add Context** — Specific, behavior-based feedback is most valuable
     4. **Save & Review** — Instant radar chart + downloadable report
@@ -238,7 +256,7 @@ with tab3:
     **Purpose**: Provide consistent, fair, and development-focused feedback aligned with Amazon Leadership Principles.
     """)
     
-    st.caption("This tool stores data only in your browser session. For team-wide use, connect it to a database or Google Sheets.")
+    st.caption("This tool stores data only in your browser session.")
 
 # ====================== FOOTER ======================
 st.caption("Amazon Operations Qualitative Ordinal Tool • Built with ❤️ for Ops Leaders")
